@@ -1,0 +1,23 @@
+{
+  "name": "mooc",
+  "version": "1.0.0",
+  "description": "stydy node",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "jade": "^1.11.0",
+    "mongoose": "^4.5.2",
+    "underscore": "^1.8.3",
+    "moment": "^2.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "movie"
+  ],
+  "author": "wulv",
+  "license": "ISC"
+}

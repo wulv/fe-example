@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>学习backbone-View</title>
+</head>
+<body>
+  <div id="search_container">
+
+  </div>
+  <script type="text/template" id="search_template">
+    <ul>
+      <% _.each(labels, function(name) { %>
+          <% if(name != "label2") {%>
+          <li><%= name %></li>
+          <% } %>
+      <% }); %>
+</ul>
+  </script>
+</body>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/jquery-1.10.2.js"></script>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/underscore.js"></script>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/backbone.js"></script>
+<script>
+(function ($) {
+  var SearchView = Backbone.View.extend({
+    el:$("#search_container"),
+    initialize:function(){
+      console.log("start00");
+      var labels = ['label1', 'label2', 'label3'];
+        this.render({labels: labels});
+    },
+    render:function(context){
+      var template = _.template($("#search_template").html());
+      $(this.el).html(template(context))
+    },
+    events:{"click input[type=button]":'doSearch'},
+    doSearch:function(event){
+      console.log($('#search_input').val());
+    }
+  });
+
+  var searchView = new SearchView();
+
+})(jQuery);
+</script>
+</html>

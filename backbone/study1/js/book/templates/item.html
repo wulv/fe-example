@@ -1,0 +1,17 @@
+<td>
+    <%= _id %>
+  </td>
+  <td>
+    <%= title %>
+  </td>
+  <td>
+    <%= author %>
+  </td>
+  <td>
+    <%= meta.updateAt %>
+  </td>
+  <td>
+    <button type="button" data-id="<%= _id %>" class="btn delete btn-primary">删除</button>
+    <a href="#edit/<%= _id %>"><button type="button"  class="btn btn-primary">修改</button></a>
+    <a href="#view/<%= _id %>"><button type="button"  class="btn btn-primary">查看</button></a>
+  </td>

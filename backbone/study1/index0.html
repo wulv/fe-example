@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>学习backbone-mcollections</title>
+</head>
+<body>
+</body>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/jquery-1.10.2.js"></script>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/underscore.js"></script>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/backbone.js"></script>
+<script>
+(function ($) {
+  var Book = Backbone.Model.extend({
+    defaults:{
+      title:'default'
+    },
+    initialize:function(){
+
+    }
+  })
+  var BookShelf = Backbone.Collection.extend({
+    model:Book,
+    initialize:function(){
+      this.on("add",function(d){
+        console.log(d);
+      })
+    }
+  });
+
+  var book1 = new Book({name : 'book1'});
+  var book3 = new Book({name : 'book1'});
+  var book2 = new Book({name : 'book2'});
+
+  var bookshelf = new BookShelf;
+   bookshelf.create(book1);
+  // bookshelf.add(book1);
+  // bookshelf.add(book2);
+  // bookshelf.add(book3);
+  //console.log(bookshelf);
+  // bookshelf.each(function(book){
+  //   console.log(book.get("name"));
+  // })
+  //
+  // bookshelf.url = '/books';
+  // var showAllBooks = function(){
+  //     bookshelf.each(function(book){
+  //         //将book数据渲染到页面的操作。
+  //         document.writeln(book.get('name'));
+  //     });
+  // }
+  // bookshelf.bind('reset',showAllBooks);
+  // bookshelf.fetch({
+  //   reset:false,
+  //   success:function(collection, response, options){
+  //     // console.log(bookshelf);
+  //
+  //
+  //
+  //     // bookshelf.add(collection);
+  //
+  //    console.log(bookshelf==collection);
+  //     collection.each(function(book){
+  //       console.log(book);
+  //     })
+  //   }
+  // })
+
+
+})(jQuery);
+</script>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>学习backbone-model</title>
+</head>
+<body>
+</body>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/jquery-1.10.2.js"></script>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/underscore.js"></script>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/backbone.js"></script>
+<script>
+(function ($) {
+  var Man = Backbone.Model.extend({
+    url:'man',
+    initialize: function(){
+      console.log("aaa");
+      this.bind("change:name",function(){
+        console.log("你改变了name属性" + this.get('name'));
+      })
+    },//定义属性
+    defaults:{
+      name:'张三',
+      age:'38'
+    }
+  });
+  var man = new Man;
+  man.set({sex:"男"});
+  console.log(man.get('name'),man.get('sex'));
+  setTimeout(function(){
+    man.save();
+  },1000);
+
+  var man1 = new Man;
+  //第一种情况，如果直接使用fetch方法，
+  //那么他会发送get请求到你model的url中，
+  //你在服务器端可以通过判断是get还是post来进行对应的操作。
+  //man1.fetch();
+  //第二种情况，在fetch中加入参数，如下：
+  //man1.fetch({url:'/man/'});
+  //这样，就会发送get请求到/getmans/这个url中，
+  //服务器返回的结果样式应该是对应的json格式数据，同save时POST过去的格式。
+
+  //不过接受服务器端返回的数据方法是这样的：
+  man1.fetch({url:'/getman/',
+      success:function(model,response){
+          alert('success');
+          //model为获取到的数据
+          alert(model.get('name'));
+      },error:function(){
+          //当返回格式不正确或者是非json数据时，会执行此方法
+          alert('error');
+      }
+  });
+
+})(jQuery);
+</script>
+</html>

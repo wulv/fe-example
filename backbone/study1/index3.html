@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>学习backbone-todos</title>
+  <style type="text/css">
+    html,
+    body {
+    	margin: 0;
+    	padding: 0;
+    }
+
+    body {
+    	font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    	line-height: 1.4em;
+    	background: #eeeeee;
+    	color: #333333;
+    	width: 520px;
+    	margin: 0 auto;
+    	-webkit-font-smoothing: antialiased;
+    }
+
+    #todoapp {
+    	background: #fff;
+    	padding: 20px;
+    	margin-bottom: 40px;
+    	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+    	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+    	-ms-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+    	-o-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+    	box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+    	-webkit-border-radius: 0 0 5px 5px;
+    	-moz-border-radius: 0 0 5px 5px;
+    	-ms-border-radius: 0 0 5px 5px;
+    	-o-border-radius: 0 0 5px 5px;
+    	border-radius: 0 0 5px 5px;
+    }
+
+    #todoapp h1 {
+    	font-size: 36px;
+    	font-weight: bold;
+    	text-align: center;
+    	padding: 0 0 10px 0;
+    }
+
+    #todoapp input[type="text"] {
+    	width: 466px;
+    	font-size: 24px;
+    	font-family: inherit;
+    	line-height: 1.4em;
+    	border: 0;
+    	outline: none;
+    	padding: 6px;
+    	border: 1px solid #999999;
+    	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+    	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+    	-ms-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+    	-o-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+    	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+    }
+
+    #todoapp input::-webkit-input-placeholder {
+    	font-style: italic;
+    }
+
+    #main {
+    	display: none;
+    }
+
+    #todo-list {
+    	margin: 10px 0;
+    	padding: 0;
+    	list-style: none;
+    }
+
+    #todo-list li {
+    	padding: 18px 20px 18px 0;
+    	position: relative;
+    	font-size: 24px;
+    	border-bottom: 1px solid #cccccc;
+    }
+
+    #todo-list li:last-child {
+    	border-bottom: none;
+    }
+
+    #todo-list li.done label {
+    	color: #777777;
+    	text-decoration: line-through;
+    }
+
+    #todo-list .destroy {
+    	position: absolute;
+    	right: 5px;
+    	top: 20px;
+    	display: none;
+    	cursor: pointer;
+    	width: 20px;
+    	height: 20px;
+    	background: url(destroy.png) no-repeat;
+    }
+
+    #todo-list li:hover .destroy {
+      	display: block;
+    }
+
+    #todo-list .destroy:hover {
+      	background-position: 0 -20px;
+    }
+
+    #todo-list li.editing {
+    	border-bottom: none;
+    	margin-top: -1px;
+    	padding: 0;
+    }
+
+    #todo-list li.editing:last-child {
+    	margin-bottom: -1px;
+    }
+
+    #todo-list li.editing .edit {
+    	display: block;
+    	width: 444px;
+    	padding: 13px 15px 14px 20px;
+    	margin: 0;
+    }
+
+    #todo-list li.editing .view {
+    	display: none;
+    }
+
+    #todo-list li .view label {
+    	word-break: break-word;
+    }
+
+    #todo-list li .edit {
+    	display: none;
+    }
+
+    #todoapp footer {
+    	display: none;
+    	margin: 0 -20px -20px -20px;
+    	overflow: hidden;
+    	color: #555555;
+    	background: #f4fce8;
+    	border-top: 1px solid #ededed;
+    	padding: 0 20px;
+    	line-height: 37px;
+    	-webkit-border-radius: 0 0 5px 5px;
+    	-moz-border-radius: 0 0 5px 5px;
+    	-ms-border-radius: 0 0 5px 5px;
+    	-o-border-radius: 0 0 5px 5px;
+    	border-radius: 0 0 5px 5px;
+    }
+
+    #clear-completed {
+    	float: right;
+    	line-height: 20px;
+    	text-decoration: none;
+    	background: rgba(0, 0, 0, 0.1);
+    	color: #555555;
+    	font-size: 11px;
+    	margin-top: 8px;
+    	margin-bottom: 8px;
+    	padding: 0 10px 1px;
+    	cursor: pointer;
+    	-webkit-border-radius: 12px;
+    	-moz-border-radius: 12px;
+    	-ms-border-radius: 12px;
+    	-o-border-radius: 12px;
+    	border-radius: 12px;
+    	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0 0;
+    	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0 0;
+    	-ms-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0 0;
+    	-o-box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0 0;
+    	box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 0 0;
+    }
+
+    #clear-completed:hover {
+    	background: rgba(0, 0, 0, 0.15);
+    	-webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+    	-moz-box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+    	-ms-box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+    	-o-box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+    	box-shadow: rgba(0, 0, 0, 0.3) 0 -1px 0 0;
+    }
+
+    #clear-completed:active {
+    	position: relative;
+    	top: 1px;
+    }
+
+    #todo-count span {
+    	font-weight: bold;
+    }
+
+    #instructions {
+    	margin: 10px auto;
+    	color: #777777;
+    	text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
+    	text-align: center;
+    }
+
+    #instructions a {
+    	color: #336699;
+    }
+
+    #credits {
+    	margin: 30px auto;
+    	color: #999;
+    	text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
+    	text-align: center;
+    }
+
+    #credits a {
+    	color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="todoapp">
+
+    <header>
+      <h1>Todos</h1>
+      <input id="new-todo" type="text" placeholder="What needs to be done?">
+    </header>
+
+    <section id="main">
+      <input id="toggle-all" type="checkbox">
+      <label for="toggle-all">Mark all as complete</label>
+      <ul id="todo-list"></ul>
+    </section>
+
+    <footer>
+      <a id="clear-completed">Clear completed</a>
+      <div id="todo-count"></div>
+    </footer>
+
+  </div>
+
+  <div id="instructions">
+    Double-click to edit a todo.
+  </div>
+
+  <div id="credits">
+    Created by
+    <br />
+    <a href="http://jgn.me/">J&eacute;r&ocirc;me Gravel-Niquet</a>.
+    <br />Rewritten by: <a href="http://addyosmani.github.com/todomvc">TodoMVC</a>.
+  </div>
+
+  <script type="text/template" id="item-template">
+    <div class="view">
+        <input class="toggle" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
+        <label><%- title %></label>
+        <a class="destroy"></a>
+    </div>
+    <input class="edit" type="text" value="<%- title %>" />
+</script>
+
+<script type="text/template" id="stats-template">
+    <% if (done) { %>
+        <a id="clear-completed">Clear <%= done %> completed <%= done == 1 ? 'item' : 'items' %></a>
+    <% } %>
+    <div class="todo-count"><b><%= remaining %></b> <%= remaining == 1 ? 'item' : 'items' %> left</div>
+</script>
+</body>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/jquery-1.10.2.js"></script>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/underscore.js"></script>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/backbone.js"></script>
+<script src="https://the5fireblog.b0.upaiyun.com/staticfile/backbone.localStorage.js"></script>
+<script>
+(function ($) {
+  // todos模型，属性：title,order,done
+  var Todo = Backbone.Model.extend({
+    defaults: {
+      title: "empty todo...",
+      order: "0",
+      done: false
+    },
+    toggle: function(){
+      this.save({
+        done: !this.get("done")
+      });
+    }
+  });
+
+  var TodoList = Backbone.Collection.extend({
+    //设置模型为Todo
+    model: Todo,
+    localStorage: new Backbone.LocalStorage("todos"),
+    done: function(){
+      return this.where({done:true});
+    },
+    remaining: function(){
+      //参考文档：http://backbonejs.org/#Collection-where
+      return this.where({done:false})
+    },
+    nextOrder: function(){
+      if(!this.length) return 1;
+      return this.last().get('order') + 1;
+    },
+    comparator:'order'
+  });
+
+  var Todos = new TodoList;
+  console.log(Todos);
+
+  var TodoView = Backbone.View.extend({
+    tagName: "li",
+    //把template模板中获取的HTML代码放在这个标签中
+    template:_.template($('#item-template').html()),
+    //获取一个任务条目的模板，缓存到这个属性上
+    events:{
+      "click .toggle"   : "toggleDone",
+      "dblclick .view"  : "edit",
+      "click a.destroy" : "clear",
+      "keypress .edit"  : "updateOnEnter",
+      "blur .edit"      : "close"
+    },
+    initialize:function(){
+      console.log(this.model,325);
+      this.listenTo(this.model,'change',this.render);
+      this.listenTo(this.model,'destroy',this.remove)
+    },
+    render:function(){
+      // console.log("change render");
+      this.$el.html(this.template(this.model.toJSON()));
+      this.$el.toggleClass('done',this.model.get("done"));
+      this.input = this.$('.edit');
+      return this;
+    },
+    //控制任务完成或者未完成
+    toggleDone:function(){
+      console.log("change");
+      this.model.toggle();
+    },
+    //控制任务条目样式
+    edit:function(){
+      $(this.el).addClass('editing');
+      this.input.focus();
+    },
+    //关闭编辑模式，并把修改内容同步到Model和界面
+    close:function(){
+      var value = this.input.val();
+      if(!value){
+        //无值内容直接从页面清除
+        this.clear();
+      }else{
+        this.model.save({title:value});
+        this.$el.removeClass("editing");
+      }
+    },
+    //按下回车，关闭编辑模式
+    updateOnEnter:function(e){
+      if(e.keyCode == 13)this.close();
+    },
+    //移除对应条目，以及对应的数据对象
+    clear:function(){
+      this.model.destroy();
+    }
+  });
+
+  var AppView = Backbone.View.extend({
+    //绑定页面主要DOM节点
+    el:$("#todoapp"),
+    //统计模板
+    statsTemplate:_.template($('#stats-template').html()),
+    //绑定DOM节点事件
+    events:{
+      "keypress #new-todo":"createOnEnter",
+      "click #clear-completed":"clearCompleted",
+      "click #toggle-all":"toggleAllComplete"
+    },
+    //在初始化过程中，绑定事件到Todos上、
+    //党任务列表改变时会触发对应事件
+    //最后从localStorage中fetch数据到Todos中
+    initialize:function(){
+      this.input = this.$("#new-todo");
+      this.allCheckbox = this.$("#toggle-all")[0],
+
+      this.listenTo(Todos,'add',this.addOne);
+      this.listenTo(Todos,"reset",this.addAll);
+      this.listenTo(Todos,"all",this.render);
+
+      this.footer = this.$('footer');
+      this.main = $('#main');
+
+      Todos.fetch();
+    },
+    //更改当前任务列表的状态
+    render:function(){
+      var done = Todos.done().length;
+      var remaining = Todos.remaining().length;
+
+      if(Todos.length){
+        this.main.show(),
+        this.footer.show();
+        this.footer.html(this.statsTemplate({done:done,remaining:remaining}));
+      }else{
+        this.main.hide();
+        this.footer.hide();
+      }
+
+      //标记checkbox状态
+      this.allCheckbox.checked = !remaining;
+    },
+
+    //添加一个任务到页面id为todo-list的div/ul中
+    addOne:function(todo){
+      var view = new TodoView({model:todo});
+      this.$("#todo-list").append(view.render().el);
+
+    },
+    addAll:function(){
+      Todos.each(this.addOne,this);
+    },
+    //生成一个新TODO的所有属性的字典
+    newAttributes:function(){
+      return{
+        title:this.input.val(),
+        order:Todos.nextOrder(),
+        done: false
+      };
+    },
+    createOnEnter: function(e) {
+       if (e.keyCode != 13) return;
+       if (!this.input.val()) return;
+      console.log(Todos);
+       //创建一个对象之后会在backbone中动态调用Todos的add方法
+       //该方法已绑定addOne。
+       Todos.create({title: this.input.val()});
+       this.input.val('');
+   },
+   // 去掉搜索已经完成的任务
+   clearCompleted: function(){
+     // 调用underscore.js中的invoke方法
+       //对过滤出来的todos调用destroy方法
+       _.invoke(Todos.done(), 'destroy');
+       return false;
+   },
+   //处理页面点击标记全部完成按钮
+   //处理逻辑：
+   //    如果标记全部按钮已选，则所有都完成
+   //    如果未选，则所有的都未完成。
+   toggleAllComplete: function() {
+       var done = this.allCheckbox.checked;
+       Todos.each(function(todo) { todo.save({'done': done}); });
+   }
+ });
+ var App = new AppView;
+
+
+})(jQuery);
+</script>
+</html>

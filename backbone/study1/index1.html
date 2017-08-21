@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>学习backbone-Router</title>
+</head>
+<body>
+  <a href="#事实上">test</a>
+  <ul>
+    <li><a href="#posts/3">test3</a></li>
+    <li><a href="#/download/user/images/hey.gif">download gif</a></li>
+    <li><a href="#/dashboard/graph">Load Route/Action View</a></li>
+  </ul>
+  <a href="#/route/3333fff">Load Route/Action View</a>
+</body>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/jquery-1.10.2.js"></script>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/underscore.js"></script>
+<script src="http://the5fireblog.b0.upaiyun.com/staticfile/backbone.js"></script>
+<script>
+(function ($) {
+
+  var AppRouter = Backbone.Router.extend({
+    routes:{
+      "posts/:id":"post",
+      "download/*path":"download",
+      "route/:action":"load",
+      ":route/:action":"action",
+      "*actions":"index"
+
+    },
+    index:function(actions){
+      console.log(actions,33);
+    },
+    download:function(path) {
+      console.log(path,'path');
+    },
+    load:function (action) {
+      console.log(action,22);
+    },
+    action:function(route,action) {
+      console.log(route,action);
+    },
+    post:function (actions) {
+      console.log(actions,111);
+    }
+  })
+
+  var app_router = new AppRouter
+
+  //trigger表示触发事件，如果为false，则只是url变化，并不会触发事件，replace表示url替换，而不是前进到这个url，意味着启用该参数，浏览器的history不会记录这个变动
+
+  Backbone.history.start();
+
+  app_router.navigate("/posts/" + 400,{trigger: true, replace: false});
+
+})(jQuery);
+</script>
+</html>

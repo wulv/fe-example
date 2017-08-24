@@ -3,9 +3,9 @@ var app = express();
 var fs = require('fs');
 var _ = require('underscore');
 var bodyParser = require('body-parser');
-var mongoose = require("mongoose");
+var mongoose = require('mongoose');
 var path = require('path');
-var Book = require('./models/book')
+var Book = require('./models/book');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -19,12 +19,12 @@ app.get('/a', function(req, res) {
 
 // get book list
 app.get('/list', function(req, res) {
-      Book.fetch(function(err,books){
-         if(err){
-             console.log(err)
-         }
-        res.send(books)
-     })
+    Book.fetch(function(err, books) {
+        if (err) {
+            console.log(err);
+        }
+        res.send(books);
+    });
     console.log(req.route.path);
 
     // var data = JSON.parse(fs.readFileSync('./_data.json'));
@@ -34,29 +34,29 @@ app.get('/list', function(req, res) {
 app.get('/get', function(req, res) {
     console.log(req.route.path);
     var id = req.query['id'] || 1;
-    Book.findById(id,function(err,book){
-       if(err){
-           console.log(err)
-       }
-      res.send(book)
-    })
+    Book.findById(id, function(err, book) {
+        if (err) {
+            console.log(err);
+        }
+        res.send(book);
+    });
 });
 // 修改记录
 app.put('/edit', function(req, res) {
     var id = req.body._id || 1;
     var bookObj = req.body;
-    Book.findById(id,function(err,book){
-            if(err){
-                console.log(err)
+    Book.findById(id, function(err, book) {
+        if (err) {
+            console.log(err);
+        }
+        _book = _.extend(book, bookObj);
+        _book.save(function(err, book) {
+            if (err) {
+                console.log(err);
             }
-            _book=_.extend(book,bookObj)
-            _book.save(function(err,book){
-                if(err){
-                    console.log(err)
-                }
-                res.send(book)
-            })
-    })
+            res.send(book);
+        });
+    });
 
     //
     // var data = {
@@ -70,15 +70,15 @@ app.put('/edit', function(req, res) {
 app.delete('/delete', function(req, res) {
     var id = req.query['id'] || 1;
     console.log(id);
-    if(id){
-     Book.remove({_id:id},function(err,book){
-         if(err){
-             console.log(err)
-         }else{
-             res.json({success:1})
-         }
-     })
- }
+    if (id) {
+        Book.remove({_id: id}, function(err, book) {
+            if (err) {
+                console.log(err);
+            }else {
+                res.json({success: 1});
+            }
+        });
+    }
 
 
 });
@@ -86,17 +86,17 @@ app.delete('/delete', function(req, res) {
 app.post('/edit', function(req, res) {
 
     console.log(req.body);
-    var _book= new Book({
-        title:req.body.title,
-        content:req.body.content,
-        author:req.body.author
+    var _book = new Book({
+        title: req.body.title,
+        content: req.body.content,
+        author: req.body.author
     });
-          _book.save(function(err,book){
-               if(err){
-                       console.log(err)
-                   }
-                   res.send(book);
-           })
+    _book.save(function(err, book) {
+        if (err) {
+            console.log(err);
+        }
+        res.send(book);
+    });
 
 
 });

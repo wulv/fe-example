@@ -1,0 +1,1 @@
+前端使用create-react-app，后端使用express做api服务器，react + redux + redux-form + react-router4 + zan-shuai + immutable.js实现表格列表，添加，修改。

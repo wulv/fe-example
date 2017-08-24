@@ -16,4 +16,6 @@ Thumbs.db
 *.swo
 *.pyc
 *.pyo
+npm-debug.log
+yarn-error.log
 node_modules*

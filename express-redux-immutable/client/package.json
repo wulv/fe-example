@@ -1,0 +1,30 @@
+{
+  "name": "immutable",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.16.2",
+    "immutable": "^3.8.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.1.2",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-form": "^7.0.3",
+    "redux-immutablejs": "^0.0.8",
+    "zan-shuai": "^1.1.1"
+  },
+  "devDependencies": {
+    "react-addons-perf": "^15.4.2",
+    "react-scripts": "1.0.11",
+    "redux-logger": "^3.0.6"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://127.0.0.1:3005"
+}

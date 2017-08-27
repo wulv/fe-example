@@ -21,7 +21,7 @@ class App extends Component {
     })
   }
 
-  dalete = () => {
+  delete = () => {
     const  { data } = this.state;
     this.setState({
       data: data.pop()

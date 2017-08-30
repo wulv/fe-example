@@ -29,5 +29,10 @@ export default createState('pageIndexState', {
         return state.update('tableData', list => list.update(
             list.findIndex((item) => item.get('name') === payload.get('name')), 
         item => item.merge(payload)))
+    },
+    updateWidth(state, payload) {
+        return state.update('tableData', list => list.update(
+            list.findIndex((item) => item.get('name') === payload.name), 
+        item => item.set('width', payload.width)));
     }
 })

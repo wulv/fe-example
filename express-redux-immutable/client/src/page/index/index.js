@@ -5,26 +5,34 @@ import { Link } from 'react-router-dom'
 
 import Table from '../../components/Table';
 
+class Footer extends PureComponent {
+  render() {
+    const { showLoading, loading } = this.props;
+    return (
+      <div>
+        <Link to="/add"><button>add</button></Link>
+        <button onClick={showLoading}>{loading ? '是' : '否'}</button>
+      </div>
+    );
+  } 
+}
 class Index extends PureComponent {
-  dalete = (name) => {
-    Actions.deleteById(name);
-  }
   componentWillMount() {
     const { data } = this.props;
     if (data.get('tableData').size === 0) {
         Actions.getTableData();
     }
   }
-  showLoading() {
-    Actions.pageIndexState.showLoading();
-  }
+
   render() {
     const { data } = this.props;
     return (
       <div className="App">
-        <Table onDelete={this.dalete} data={data.get('tableData')} />
-        <Link to="/add"><button>add</button></Link>
-        <button onClick={this.showLoading}>{data.get('loading') ? '是' : '否'}</button>
+        <Table
+          onDelete={Actions.deleteById}
+          onWidthChange={Actions.pageIndexState.updateWidth}
+          data={data.get('tableData')} />
+        <Footer showLoading={Actions.pageIndexState.showLoading}  loading={data.get('loading') } />
       </div>
     );
   }

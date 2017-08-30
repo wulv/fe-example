@@ -40,7 +40,7 @@ export default class Table extends PureComponent {
       <div className='zent-table '>
         {Th()}
         <div className='tbody'>
-          {tableData.map(i => <Tr onDelete={this.props.onDelete} key={i.get('name')} data={i} />
+          {tableData.map(i => <Tr onWidthChange={this.props.onWidthChange} onDelete={this.props.onDelete} key={i.get('name')} data={i} />
            )}
         </div>
       </div>

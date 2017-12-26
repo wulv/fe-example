@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const randomId = () => Math.random().toString(36).substring(2);
 
-export default class Footer extends Component {
+export default class AddTodoForm extends Component {
   addTodo(todo) {
     const { todos, setTodos } = this.props;
     setTodos([{

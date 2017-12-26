@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
 
-export default class Footer extends Component {
+export default class Todos extends Component {
   remove = (id) => {
     const { todos, setTodos } = this.props;
     setTodos(todos.filter(todo => todo.id === id));
